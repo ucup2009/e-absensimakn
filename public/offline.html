@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Sedang offline — E-Absensi MAKN Ende</title>
+    <link rel="icon" type="image/svg+xml" href="/images/logo-makn-ende.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { color-scheme: light; }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            background:
+                radial-gradient(900px 500px at 15% 0%, rgba(16, 185, 129, .22), transparent 60%),
+                radial-gradient(700px 400px at 100% 10%, rgba(2, 132, 199, .16), transparent 55%),
+                #eef4f0;
+            color: #0f172a;
+        }
+        .card {
+            width: min(420px, 100%);
+            text-align: center;
+            padding: 32px 28px;
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, .8);
+            background: rgba(255, 255, 255, .65);
+            backdrop-filter: blur(22px);
+            box-shadow: 0 24px 60px -28px rgba(15, 23, 42, .35);
+        }
+        img { width: 88px; height: 88px; margin-bottom: 8px; }
+        .dot { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #b45309; background: rgba(251, 191, 36, .15); padding: 6px 12px; border-radius: 999px; }
+        h1 { font-size: 22px; margin: 14px 0 6px; letter-spacing: -.02em; }
+        p { margin: 0 auto; max-width: 300px; font-size: 13.5px; line-height: 1.6; color: #64748b; }
+        button {
+            margin-top: 22px;
+            width: 100%;
+            min-height: 50px;
+            border: 0;
+            border-radius: 16px;
+            background: #0d5c3a;
+            color: #fff;
+            font: inherit;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        button:active { transform: scale(.98); }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <img src="/images/logo.png" alt="Logo MAKN Ende">
+        <div class="dot">
+            <span style="width:6px;height:6px;border-radius:999px;background:#f59e0b"></span>
+            Tidak ada koneksi
+        </div>
+        <h1>Kamu sedang offline</h1>
+        <p>Data presensi akan tersedia lagi setelah perangkat terhubung ke internet.</p>
+        <button type="button" onclick="location.reload()">Coba lagi</button>
+    </div>
+</body>
+</html>
