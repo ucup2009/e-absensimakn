@@ -75,11 +75,3 @@ Route::middleware('auth')->group(function () {
         Route::get('/pengaturan/backup/{file}', [SettingController::class, 'downloadBackup'])->name('settings.backup.download');
     });
 });
-
-// TEMP: hanya untuk pratinjau desain (dihapus setelah verifikasi)
-Route::get('/_preview-login/{email}', function (string $email) {
-    $user = App\Models\User::where('email', $email)->firstOrFail();
-    Illuminate\Support\Facades\Auth::login($user);
-
-    return redirect('/dashboard');
-});

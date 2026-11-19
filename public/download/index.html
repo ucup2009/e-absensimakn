@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Unduh Aplikasi — E-Absensi MAKN Ende</title>
+    <meta name="theme-color" content="#0d5c3a">
+    <link rel="icon" type="image/png" href="/icons/icon-192.png">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { color-scheme: light; }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            color: #0f172a;
+            background:
+                radial-gradient(900px 500px at 15% 0%, rgba(16, 185, 129, .22), transparent 60%),
+                radial-gradient(700px 400px at 100% 10%, rgba(2, 132, 199, .16), transparent 55%),
+                #eef4f0;
+        }
+        .card {
+            width: min(420px, 100%);
+            padding: 30px 26px;
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, .8);
+            background: rgba(255, 255, 255, .7);
+            backdrop-filter: blur(22px);
+            box-shadow: 0 24px 60px -28px rgba(15, 23, 42, .35);
+        }
+        .logo {
+            width: 74px;
+            height: 74px;
+            border-radius: 20px;
+            background: #fff;
+            padding: 8px;
+            box-shadow: 0 10px 24px -14px rgba(15, 23, 42, .45);
+        }
+        .logo img { width: 100%; height: 100%; object-fit: contain; }
+        h1 { font-size: 21px; margin: 18px 0 6px; letter-spacing: -.02em; }
+        p { margin: 0; font-size: 13.5px; line-height: 1.65; color: #64748b; }
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 22px;
+            width: 100%;
+            min-height: 54px;
+            border-radius: 18px;
+            background: #0d5c3a;
+            color: #fff;
+            font-weight: 700;
+            font-size: 14.5px;
+            text-decoration: none;
+            box-shadow: 0 16px 30px -18px rgba(13, 92, 58, .9);
+        }
+        .btn:active { transform: scale(.98); }
+        .meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 14px;
+            font-size: 11.5px;
+            color: #94a3b8;
+        }
+        ol { margin: 18px 0 0; padding-left: 18px; font-size: 12.5px; color: #475569; line-height: 1.8; }
+        .note {
+            margin-top: 18px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: rgba(13, 92, 58, .07);
+            font-size: 11.5px;
+            line-height: 1.6;
+            color: #0d5c3a;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="logo"><img src="/images/logo.png" alt="MAKN Ende"></div>
+        <h1>Aplikasi E-Absensi</h1>
+        <p>Versi Android untuk wali kelas dan operator. Tampilannya sama dengan versi web, langsung dari server madrasah.</p>
+
+        <a class="btn" href="/download/e-absensi.apk" download>
+            <span>⬇</span> Unduh APK (Android)
+        </a>
+        <div class="meta">
+            <span>Versi 1.0.0</span>
+            <span>± 60 KB</span>
+        </div>
+
+        <ol>
+            <li>Ketuk tombol unduh di atas.</li>
+            <li>Buka file, lalu izinkan <em>“Instal dari sumber tidak dikenal”</em>.</li>
+            <li>Setelah terpasang, buka aplikasi dan masuk dengan akun madrasah.</li>
+        </ol>
+
+        <p class="note">Pengguna iPhone: buka aplikasi di Safari, ketuk <strong>Bagikan</strong> lalu <strong>Tambahkan ke Layar Utama</strong>.</p>
+    </div>
+</body>
+</html>

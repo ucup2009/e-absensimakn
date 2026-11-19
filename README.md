@@ -123,6 +123,21 @@ database/seeders/          # DatabaseSeeder (data demo)
 routes/web.php             # seluruh rute + guard peran
 ```
 
+## Aplikasi Android (APK)
+
+APK pembungkus WebView tersedia di `android/` (lihat `android/README.md`).
+
+- Halaman unduh di server: **`/download/`** (contoh `http://192.168.2.10:8000/download/`).
+- Berkas APK: `public/download/e-absensi.apk` (versi 1.0.0).
+- Alamat server di dalam APK diatur pada `android/res/values/strings.xml` (`server_url`).
+- Build ulang: `.\android\build.ps1 -ServerUrl "https://domain-anda"`.
+
+Catatan:
+- Keystore penanda tangan ada di `storage/app/android/e-absensi.jks` (jangan hilang).
+- Pemindai kamera di APK hanya aktif bila server memakai **HTTPS**; pada alamat
+  `http://` (IP lokal) halaman pindai tetap bisa dipakai lewat input NISN manual.
+- iPhone/iPad tidak memakai APK: pasang lewat Safari → Bagikan → **Tambahkan ke Layar Utama** (PWA).
+
 ## Lisensi
 
 Dibangun untuk kebutuhan PKL di MAKN Ende — Seven Smarts Indonesia. Laravel bersifat open-source di bawah lisensi MIT.

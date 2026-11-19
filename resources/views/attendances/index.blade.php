@@ -210,16 +210,25 @@
                 <button type="button" data-modal-close class="text-slate-400 hover:text-slate-600"><span class="material-symbols-outlined">close</span></button>
             </div>
 
-            <form method="POST" action="{{ route('attendances.store') }}" class="mt-4 space-y-3">
+            <form method="POST" action="{{ route('attendances.store') }}" class="mt-4 space-y-3" data-student-form>
                 @csrf
                 <div>
-                    <label class="label" for="student_id">Siswa</label>
-                    <select id="student_id" name="student_id" data-autofocus required class="select">
-                        <option value="">Pilih siswa…</option>
-                        @foreach ($students as $student)
-                            <option value="{{ $student->id }}">{{ $student->name }} — {{ $student->schoolClass?->name }} ({{ $student->nisn }})</option>
-                        @endforeach
-                    </select>
+                    <label class="label" for="student_search">Siswa</label>
+                    <div class="relative" data-student-picker
+                        data-students="{{ $students->map(fn ($student) => ['id' => $student->id, 'name' => $student->name, 'nisn' => $student->nisn, 'class' => $student->schoolClass?->name])->toJson() }}">
+                        <span class="material-symbols-outlined pointer-events-none absolute left-3.5 top-1/2 z-10 -translate-y-1/2 text-[19px] text-slate-400">search</span>
+                        <input id="student_search" type="text" data-autofocus autocomplete="off" spellcheck="false"
+                            placeholder="Ketik nama atau NISN…" class="input pl-11 pr-11"
+                            role="combobox" aria-expanded="false" aria-controls="student_results" aria-autocomplete="list">
+                        <input type="hidden" name="student_id" data-student-value>
+                        <button type="button" data-student-clear title="Hapus pilihan"
+                            class="absolute right-1.5 top-1/2 hidden h-10 w-10 -translate-y-1/2 place-items-center rounded-xl text-slate-400 transition hover:bg-slate-100 hover:text-slate-600">
+                            <span class="material-symbols-outlined text-[19px]">close</span>
+                        </button>
+                    </div>
+                    <div id="student_results" data-student-results role="listbox"
+                        class="mt-2 hidden max-h-56 overflow-y-auto rounded-2xl border border-white/70 bg-white/95 p-1.5 shadow-lg shadow-slate-900/5 backdrop-blur-xl"></div>
+                    <p data-student-hint class="mt-1.5 text-[11px] text-slate-400">Ketik nama atau NISN, lalu pilih dari daftar.</p>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>

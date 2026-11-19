@@ -20,6 +20,9 @@
 /public/storage
 /storage/*.key
 /storage/pail
+/storage/app/android/
+/storage/app/lan-tls/
+/public/download/*.apk
 /vendor
 _ide_helper.php
 Homestead.json

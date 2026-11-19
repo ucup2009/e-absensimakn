@@ -1,0 +1,12 @@
+[
+    {
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "id.sch.maknende.absensi",
+            "sha256_cert_fingerprints": [
+                "29:05:CC:01:22:F1:32:1E:64:12:77:B6:01:F6:9B:56:47:96:48:48:D0:4D:69:00:BA:39:D2:7C:81:41:51:36"
+            ]
+        }
+    }
+]

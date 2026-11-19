@@ -136,7 +136,7 @@
 
                         <button type="submit" class="btn-primary w-full rounded-xl py-3.5 text-[13.5px]">
                             Masuk ke Sistem Presensi
-                            <span class="material-symb  ols-outlined text-[19px]">arrow_forward</span>
+                            <span class="material-symbols-outlined text-[19px]">arrow_forward</span>
                         </button>
                     </form>
 
