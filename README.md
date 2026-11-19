@@ -127,10 +127,15 @@ routes/web.php             # seluruh rute + guard peran
 
 APK pembungkus WebView tersedia di `android/` (lihat `android/README.md`).
 
-- Halaman unduh di server: **`/download/`** (contoh `http://192.168.2.10:8000/download/`).
-- Berkas APK: `public/download/e-absensi.apk` (versi 1.0.0).
-- Alamat server di dalam APK diatur pada `android/res/values/strings.xml` (`server_url`).
+- Halaman unduh di server: **`/download/`** (contoh `https://absensi.maknende.my.id/download/`).
+- Berkas APK: `public/download/e-absensi.apk` (versi 1.0.2).
+- **Alamat server bisa diganti dari dalam aplikasi** (tombol “Alamat server” di
+  halaman masuk, atau “Ganti alamat server” di halaman offline) — tidak perlu
+  build ulang saat domain/tunnel berubah.
+- Alamat bawaan diatur pada `android/res/values/strings.xml` (`server_url`).
 - Build ulang: `.\android\build.ps1 -ServerUrl "https://domain-anda"`.
+- Di balik tunnel/reverse proxy, `bootstrap/app.php` memakai
+  `trustProxies(at: '*')` agar aset dimuat lewat HTTPS (bukan mixed content).
 
 Catatan:
 - Keystore penanda tangan ada di `storage/app/android/e-absensi.jks` (jangan hilang).

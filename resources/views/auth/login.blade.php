@@ -140,6 +140,12 @@
                         </button>
                     </form>
 
+                    <button type="button" id="app-server-settings"
+                        class="mt-4 hidden w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white/70 px-3 py-2.5 text-[11.5px] font-semibold text-brand-700 transition hover:bg-white">
+                        <span class="material-symbols-outlined text-[16px]">dns</span>
+                        <span>Alamat server: <span id="app-server-url" class="font-normal"></span></span>
+                    </button>
+
                     <div class="mt-5 rounded-xl bg-[#F1EFFB] p-4">
                         <p class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#6C63A8]">
                             <span class="material-symbols-outlined text-[15px]">bolt</span> Akses Cepat Pengujian (Staging Demo)
@@ -237,6 +243,17 @@
                 document.getElementById('password').value = 'password';
             });
         });
+
+        // Tombol ganti alamat server hanya muncul di dalam aplikasi Android.
+        (function () {
+            if (!window.EabsensiApp || !navigator.userAgent.includes('EabsensiApp')) return;
+            const button = document.getElementById('app-server-settings');
+            if (!button) return;
+            document.getElementById('app-server-url').textContent = EabsensiApp.getServerUrl();
+            button.classList.remove('hidden');
+            button.classList.add('flex');
+            button.addEventListener('click', () => EabsensiApp.openSettings());
+        })();
     </script>
 </body>
 

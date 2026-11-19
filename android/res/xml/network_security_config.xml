@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-    <!-- HTTPS tetap divalidasi normal; HTTP polos hanya diizinkan untuk server lokal. -->
-    <base-config cleartextTrafficPermitted="false" />
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="false">192.168.2.10</domain>
-        <domain includeSubdomains="false">localhost</domain>
-        <domain includeSubdomains="false">127.0.0.1</domain>
-        <domain includeSubdomains="false">10.0.2.2</domain>
-    </domain-config>
+    <!--
+        Aplikasi ini dipakai di jaringan madrasah dan alamat server bisa diganti
+        dari dalam aplikasi (termasuk alamat http:// IP lokal), jadi HTTP biasa
+        diizinkan. Sertifikat HTTPS tetap divalidasi seperti biasa.
+    -->
+    <base-config cleartextTrafficPermitted="true" />
 </network-security-config>

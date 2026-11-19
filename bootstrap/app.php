@@ -16,6 +16,11 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => \App\Http\Middleware\EnsureRole::class,
         ]);
 
+        // Server berjalan di belakang Cloudflare Tunnel / reverse proxy lokal.
+        // Tanpa ini Laravel mengira request memakai http:// sehingga aset
+        // di halaman HTTPS diblokir browser (mixed content).
+        $middleware->trustProxies(at: '*');
+
         $middleware->redirectGuestsTo('/login');
     })
     ->withExceptions(function (Exceptions $exceptions): void {

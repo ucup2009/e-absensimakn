@@ -10,25 +10,57 @@ dari server Laravel.
 |---|---|
 | `AndroidManifest.xml` | Izin internet + kamera, tema, activity utama |
 | `java/.../MainActivity.java` | WebView, izin kamera, tombol back, halaman offline |
-| `res/values/strings.xml` | **`server_url`** — alamat server yang dibuka aplikasi |
-| `res/xml/network_security_config.xml` | Daftar host yang boleh memakai HTTP biasa |
-| `assets/offline.html` | Tampilan saat server tidak terjangkau |
+| `res/values/strings.xml` | **`server_url`** — alamat server bawaan (dipakai pertama kali) |
+| `res/mipmap-*` | Ikon launcher tiap kerapatan + lapisan adaptive icon |
+| `res/xml/network_security_config.xml` | Mengizinkan HTTP biasa (IP lokal / tunnel) |
+| `assets/offline.html` | Tampilan saat server tidak terjangkau + tombol ganti alamat |
+
+## Ikon aplikasi
+
+Ikon dibuat dari `public/images/logo.png` oleh `make-icons.ps1`:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File android\make-icons.ps1
+```
+
+- Ikon biasa & bulat: `48 / 72 / 96 / 144 / 192 px`.
+- Adaptive icon (Android 8+): lapisan depan `108dp` dengan logo di zona aman
+  (46 % kanvas) sehingga tidak terpotong oleh mask bulat/squircle.
+- Logo tidak diregangkan: rasio asli dipertahankan, margin transparan dipangkas.
 
 ## Mengubah alamat server
 
-Edit `res/values/strings.xml`:
+Ada dua cara:
+
+1. **Dari dalam aplikasi (tanpa build ulang)** — versi 1.0.1 ke atas:
+   - Di halaman masuk, ketuk tombol **“Alamat server: …”** di bawah form login.
+   - Atau, saat muncul halaman *Server tidak terjangkau*, ketuk
+     **Ganti alamat server**.
+   - Alamat disimpan di HP. Tombol **Bawaan** mengembalikan ke alamat pabrik
+     dari `strings.xml`.
+2. **Alamat bawaan (dipasang baru)** — edit `res/values/strings.xml`:
 
 ```xml
-<string name="server_url">http://192.168.2.10:8000</string>
+<string name="server_url">https://absensi.maknende.my.id</string>
 ```
 
-- Untuk uji di jaringan madrasah: pakai IP komputer server (`ipconfig`).
-- Untuk produksi: pakai domain HTTPS, mis. `https://absensi.maknende.sch.id`.
-  Setelah HTTPS aktif, kamera pemindai QR ikut berfungsi (browser/WebView
-  memblokir kamera pada alamat `http://` selain localhost).
+- Untuk uji di jaringan madrasah: pakai IP komputer server (`ipconfig`),
+  mis. `http://192.168.2.10:8000`.
+- Untuk kamera pemindai QR: server **wajib HTTPS** (WebView memblokir kamera
+  pada `http://` selain localhost). Contoh gratis: Cloudflare Quick Tunnel.
 
-Jangan lupa tambahkan host tersebut ke `res/xml/network_security_config.xml`
-bila masih memakai HTTP.
+## HTTPS gratis dengan Cloudflare Quick Tunnel
+
+```powershell
+cloudflared tunnel --url http://localhost:8000
+```
+
+Contoh keluaran: `https://kata-kata-acak.trycloudflare.com` → masukkan alamat
+itu lewat menu **Alamat server** di aplikasi. URL berubah setiap tunnel
+dijalankan ulang, tetapi APK tidak perlu di-build ulang lagi.
+
+Agar Laravel menghasilkan URL aset `https://` di balik tunnel, aplikasi
+memakai `$middleware->trustProxies(at: '*')` di `bootstrap/app.php`.
 
 ## Membangun ulang APK
 
