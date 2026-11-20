@@ -6,6 +6,7 @@ use App\Models\AuditLog;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -52,6 +53,12 @@ class UserController extends Controller
     {
         $data = $this->validated($request);
         $data['is_active'] = $request->boolean('is_active');
+        unset($data['photo']);
+
+        if ($request->hasFile('photo')) {
+            $data['photo'] = $request->file('photo')->store('users', 'public');
+        }
+
         $user = User::create($data);
         AuditLog::record('user.create', 'Menambah pengguna '.$user->name);
 
@@ -71,6 +78,20 @@ class UserController extends Controller
             unset($data['password']);
         }
 
+        unset($data['photo']);
+
+        if ($request->hasFile('photo')) {
+            if ($user->photo) {
+                Storage::disk('public')->delete($user->photo);
+            }
+            $data['photo'] = $request->file('photo')->store('users', 'public');
+        } elseif ($request->boolean('remove_photo')) {
+            if ($user->photo) {
+                Storage::disk('public')->delete($user->photo);
+            }
+            $data['photo'] = null;
+        }
+
         $data['is_active'] = $request->boolean('is_active');
         $user->update($data);
         AuditLog::record('user.update', 'Memperbarui pengguna '.$user->name);
@@ -83,6 +104,9 @@ class UserController extends Controller
         abort_if($request->user()->id === $user->id, 422, 'Anda tidak dapat menghapus akun Anda sendiri.');
 
         $name = $user->name;
+        if ($user->photo) {
+            Storage::disk('public')->delete($user->photo);
+        }
         $user->delete();
         AuditLog::record('user.delete', 'Menghapus pengguna '.$name);
 
@@ -97,6 +121,7 @@ class UserController extends Controller
             'role' => ['required', 'in:admin,wali_kelas'],
             'nip' => ['nullable', 'string', 'max:30'],
             'phone' => ['nullable', 'string', 'max:20'],
+            'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'password' => [$user ? 'nullable' : 'required', 'string', 'min:8'],
             'is_active' => ['sometimes', 'boolean'],
         ]);

@@ -82,6 +82,13 @@ class User extends Authenticatable
 
     public function avatarUrl(): ?string
     {
-        return $this->photo ? asset('storage/'.$this->photo) : null;
+        if (blank($this->photo)) {
+            return null;
+        }
+
+        // Tambah versi agar browser tidak menampilkan foto lama setelah diganti.
+        $version = $this->updated_at?->timestamp;
+
+        return asset('storage/'.$this->photo).($version ? '?v='.$version : '');
     }
 }

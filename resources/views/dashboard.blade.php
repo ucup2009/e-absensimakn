@@ -14,14 +14,22 @@
 
         {{-- Sapaan --}}
         <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-                <h2 class="text-[22px] font-extrabold tracking-tight text-ink sm:text-[26px]">
-                    {{ $greeting }}, {{ auth()->user()->shortName() }} 👋
-                </h2>
-                <p class="mt-1 text-[13px] text-slate-500">
-                    {{ $today->locale('id')->translatedFormat('l, d F Y') }} •
-                    {{ $notRecorded }} siswa belum absen hari ini.
-                </p>
+            <div class="flex items-center gap-3">
+                @include('partials.avatar', [
+                    'user' => auth()->user(),
+                    'class' => 'h-12 w-12 rounded-2xl',
+                    'fallback' => 'bg-brand-500 text-white',
+                    'text' => 'text-[15px]',
+                ])
+                <div>
+                    <h2 class="text-[22px] font-extrabold tracking-tight text-ink sm:text-[26px]">
+                        {{ $greeting }}, {{ auth()->user()->shortName() }} 👋
+                    </h2>
+                    <p class="mt-1 text-[13px] text-slate-500">
+                        {{ $today->locale('id')->translatedFormat('l, d F Y') }} •
+                        {{ $notRecorded }} siswa belum absen hari ini.
+                    </p>
+                </div>
             </div>
             <a href="{{ route('attendances.index') }}" class="btn-secondary hidden sm:inline-flex">
                 <span class="material-symbols-outlined text-[19px]">fact_check</span>

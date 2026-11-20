@@ -16,13 +16,42 @@
             </div>
         </div>
 
-        <form method="POST" action="{{ $isEdit ? route('users.update', $user) : route('users.store') }}" class="card-pad space-y-4">
+        <form method="POST" action="{{ $isEdit ? route('users.update', $user) : route('users.store') }}"
+            enctype="multipart/form-data" class="card-pad space-y-4">
             @csrf
             @if ($isEdit)
                 @method('PUT')
             @endif
 
             <div class="grid gap-3.5 sm:grid-cols-2">
+                <div class="sm:col-span-2">
+                    <label class="label">Foto Pengguna</label>
+                    <div class="flex items-center gap-3.5 rounded-2xl border border-slate-200 bg-white/70 p-3">
+                        <div id="photo-preview" class="h-16 w-16 shrink-0 overflow-hidden rounded-2xl bg-slate-100">
+                            @include('partials.avatar', [
+                                'user' => $user,
+                                'class' => 'h-16 w-16 rounded-2xl',
+                                'fallback' => 'bg-brand-50 text-brand-700',
+                                'text' => 'text-[18px]',
+                            ])
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <label for="photo" class="btn-secondary cursor-pointer py-2 text-[11px]">
+                                <span class="material-symbols-outlined text-[16px]">photo_camera</span> Pilih foto
+                            </label>
+                            <input id="photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp" class="hidden">
+                            <p class="mt-1.5 text-[10.5px] leading-relaxed text-slate-400">JPG/PNG/WEBP, maks 2 MB, sebaiknya persegi.</p>
+                            @if ($isEdit && $user->photo)
+                                <label class="mt-1.5 flex cursor-pointer items-center gap-1.5 text-[10.5px] font-medium text-rose-600">
+                                    <input type="checkbox" name="remove_photo" value="1" class="h-3.5 w-3.5 rounded border-rose-300 text-rose-500 focus:ring-rose-500/30">
+                                    Hapus foto saat disimpan
+                                </label>
+                            @endif
+                            @error('photo')<p class="mt-1 text-[11px] text-rose-600">{{ $message }}</p>@enderror
+                        </div>
+                    </div>
+                </div>
+
                 <div class="sm:col-span-2">
                     <label class="label" for="name">Nama Lengkap <span class="text-rose-500">*</span></label>
                     <input id="name" name="name" value="{{ old('name', $user->name) }}" required placeholder="Ust. Nama Lengkap, S.Pd."
@@ -79,3 +108,16 @@
         </form>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.getElementById('photo')?.addEventListener('change', (event) => {
+            const file = event.target.files && event.target.files[0];
+            const preview = document.getElementById('photo-preview');
+            if (!file || !preview) return;
+
+            const url = URL.createObjectURL(file);
+            preview.innerHTML = `<img src="${url}" alt="" class="h-full w-full object-cover">`;
+        });
+    </script>
+@endpush

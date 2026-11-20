@@ -15,14 +15,22 @@
 @section('content')
     <div class="mx-auto max-w-[1400px] space-y-5">
         <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-                <div class="flex flex-wrap items-center gap-2">
-                    <span class="badge-green"><span class="material-symbols-outlined text-[13px]">co_present</span> Wali Kelas</span>
-                    <span class="badge-slate"><span class="material-symbols-outlined text-[13px]">calendar_month</span> {{ $date?->locale('id')->translatedFormat('l, d F Y') }}</span>
+            <div class="flex items-center gap-3">
+                @include('partials.avatar', [
+                    'user' => $class?->homeroomTeacher ?? auth()->user(),
+                    'class' => 'h-12 w-12 rounded-2xl',
+                    'fallback' => 'bg-emerald-100 text-emerald-700',
+                    'text' => 'text-[15px]',
+                ])
+                <div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="badge-green"><span class="material-symbols-outlined text-[13px]">co_present</span> Wali Kelas</span>
+                        <span class="badge-slate"><span class="material-symbols-outlined text-[13px]">calendar_month</span> {{ $date?->locale('id')->translatedFormat('l, d F Y') }}</span>
+                    </div>
+                    <p class="mt-1 text-sm text-slate-500">
+                        {{ $class ? 'Wali kelas: '.($class->homeroomTeacher?->name ?? auth()->user()->name).' • '.$totalStudents.' siswa aktif' : 'Anda belum ditetapkan sebagai wali kelas.' }}
+                    </p>
                 </div>
-                <p class="mt-1 text-sm text-slate-500">
-                    {{ $class ? 'Wali kelas: '.($class->homeroomTeacher?->name ?? auth()->user()->name).' • '.$totalStudents.' siswa aktif' : 'Anda belum ditetapkan sebagai wali kelas.' }}
-                </p>
             </div>
 
             @if ($class)

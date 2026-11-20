@@ -4,6 +4,7 @@ use App\Http\Controllers\AssistantController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScanController;
 use App\Http\Controllers\SchoolClassController;
 use App\Http\Controllers\SettingController;
@@ -27,6 +28,10 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [LoginController::class, 'destroy'])->middleware('auth')->name('logout');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/profil', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profil/foto', [ProfileController::class, 'updatePhoto'])->name('profile.photo.update');
+    Route::delete('/profil/foto', [ProfileController::class, 'destroyPhoto'])->name('profile.photo.destroy');
+
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
     Route::get('/wali-kelas', [WaliKelasController::class, 'index'])->name('wali.dashboard');

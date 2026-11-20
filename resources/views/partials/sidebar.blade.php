@@ -73,9 +73,13 @@
 
     <div class="relative border-t border-white/10 p-3">
         <div class="flex items-center gap-3 rounded-2xl bg-white/5 p-2.5">
-            <div class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-emerald-400/20 text-[11px] font-bold text-emerald-100 ring-1 ring-emerald-300/20">
-                {{ $user?->initials() }}
-            </div>
+            <a href="{{ route('profile.edit') }}" title="Foto profil" class="shrink-0 transition hover:opacity-80">
+                @include('partials.avatar', [
+                    'user' => $user,
+                    'class' => 'h-9 w-9 rounded-xl',
+                    'fallback' => 'bg-emerald-400/20 text-emerald-100 ring-1 ring-emerald-300/20',
+                ])
+            </a>
             <div class="min-w-0 flex-1">
                 <p class="truncate text-[12px] font-semibold">{{ $user?->name }}</p>
                 <p class="truncate text-[10px] text-white/50">{{ $user?->roleLabel() }}</p>

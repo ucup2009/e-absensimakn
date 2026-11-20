@@ -28,6 +28,11 @@
                         <span class="material-symbols-outlined align-middle text-[16px]">logout</span> Pulang Sore
                     </button>
                 </div>
+                <button type="button" id="sound-toggle" aria-pressed="true" title="Bunyi saat presensi berhasil"
+                    class="btn-secondary">
+                    <span class="material-symbols-outlined text-[19px]" id="sound-icon">volume_up</span>
+                    <span id="sound-label" class="hidden sm:inline">Suara Aktif</span>
+                </button>
                 <button type="button" id="fullscreen-btn" class="btn-secondary">
                     <span class="material-symbols-outlined text-[19px]">fullscreen</span>
                     Layar Penuh
@@ -334,23 +339,100 @@
                 button.addEventListener('click', () => setMode(button.dataset.mode));
             });
 
-            const beep = (success = true) => {
+            // ---- Suara presensi ----
+            // AudioContext hanya boleh berbunyi setelah ada interaksi pengguna,
+            // jadi konteks dibuka sekali lewat sentuhan/klik pertama di halaman.
+            const AudioEngine = (() => {
+                let ctx = null;
+                let enabled = true;
+
                 try {
-                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-                    const ctx = new AudioCtx();
-                    const oscillator = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    oscillator.connect(gain);
-                    gain.connect(ctx.destination);
-                    oscillator.frequency.value = success ? 880 : 260;
-                    gain.gain.setValueAtTime(0.08, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.25);
-                    oscillator.start();
-                    oscillator.stop(ctx.currentTime + 0.26);
+                    enabled = localStorage.getItem('absensi.sound') !== 'off';
                 } catch (e) {
-                    // abaikan
+                    // localStorage tidak tersedia
                 }
-            };
+
+                const context = () => {
+                    if (ctx) return ctx;
+                    const Ctx = window.AudioContext || window.webkitAudioContext;
+                    if (!Ctx) return null;
+                    ctx = new Ctx();
+                    return ctx;
+                };
+
+                const unlock = () => {
+                    const c = context();
+                    if (c && c.state === 'suspended') {
+                        c.resume().catch(() => {});
+                    }
+                };
+
+                ['pointerdown', 'touchstart', 'keydown'].forEach((event) => {
+                    window.addEventListener(event, unlock, { passive: true });
+                });
+
+                const tone = (c, frequency, startAt, duration, level, type = 'sine') => {
+                    const oscillator = c.createOscillator();
+                    const gain = c.createGain();
+                    oscillator.type = type;
+                    oscillator.frequency.setValueAtTime(frequency, startAt);
+                    gain.gain.setValueAtTime(0.0001, startAt);
+                    gain.gain.exponentialRampToValueAtTime(level, startAt + 0.02);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, startAt + duration);
+                    oscillator.connect(gain).connect(c.destination);
+                    oscillator.start(startAt);
+                    oscillator.stop(startAt + duration + 0.03);
+                };
+
+                // Nada bel: frekuensi dasar + oktaf tipis agar terdengar seperti "ting".
+                const chime = (notes, level) => {
+                    const c = context();
+                    if (!c) return;
+                    if (c.state === 'suspended') {
+                        c.resume().catch(() => {});
+                    }
+                    const base = c.currentTime + 0.03;
+                    notes.forEach(([frequency, offset, duration]) => {
+                        tone(c, frequency, base + offset, duration, level);
+                        tone(c, frequency * 2, base + offset, duration * 0.55, level * 0.15, 'triangle');
+                    });
+                };
+
+                const vibrate = (pattern) => {
+                    try {
+                        navigator.vibrate?.(pattern);
+                    } catch (e) {
+                        // abaikan
+                    }
+                };
+
+                const play = (notes, level, pattern) => {
+                    if (!enabled) return;
+                    chime(notes, level);
+                    vibrate(pattern);
+                };
+
+                return {
+                    isEnabled: () => enabled,
+                    setEnabled: (value) => {
+                        enabled = value;
+                        try {
+                            localStorage.setItem('absensi.sound', value ? 'on' : 'off');
+                        } catch (e) {
+                            // abaikan
+                        }
+                    },
+                    unlock,
+                    // Hadir tepat waktu: arpeggio naik yang cerah.
+                    success: () => play([[880, 0, 0.18], [1108.73, 0.11, 0.18], [1318.51, 0.22, 0.45]], 0.3, [30, 40, 30]),
+                    // Terlambat: masih positif, nadanya lebih rendah.
+                    late: () => play([[659.25, 0, 0.18], [880, 0.13, 0.42]], 0.28, [45, 60, 45]),
+                    // Presensi pulang.
+                    out: () => play([[987.77, 0, 0.16], [783.99, 0.11, 0.16], [1174.66, 0.22, 0.42]], 0.28, [30, 40, 30]),
+                    // Gagal: dua nada rendah.
+                    error: () => play([[233.08, 0, 0.22], [185, 0.24, 0.34]], 0.22, [90, 70, 90]),
+                };
+            })();
 
             const toast = (message, type = 'error') => {
                 const el = document.createElement('div');
@@ -386,7 +468,7 @@
                     const payload = await response.json();
 
                     if (!response.ok || !payload.success) {
-                        beep(false);
+                        AudioEngine.error();
                         $('error-message').textContent = payload.message || 'Terjadi kesalahan saat memproses presensi.';
                         showState('error');
                         toast(payload.message || 'Presensi gagal.', 'error');
@@ -394,13 +476,19 @@
                     }
 
                     renderResult(payload);
-                    beep(true);
+                    if (payload.type === 'out') {
+                        AudioEngine.out();
+                    } else if (payload.attendance?.status === 'terlambat') {
+                        AudioEngine.late();
+                    } else {
+                        AudioEngine.success();
+                    }
                     showState('result');
                     refreshRecent();
                     $('manual-input').value = '';
                     $('modal-nisn').value = '';
                 } catch (err) {
-                    beep(false);
+                    AudioEngine.error();
                     $('error-message').textContent = 'Tidak dapat menghubungi server presensi. Periksa koneksi jaringan.';
                     showState('error');
                 } finally {
@@ -470,6 +558,27 @@
             });
 
             $('retry-btn').addEventListener('click', () => showState('empty'));
+
+            const soundToggle = $('sound-toggle');
+            const paintSound = () => {
+                const on = AudioEngine.isEnabled();
+                $('sound-icon').textContent = on ? 'volume_up' : 'volume_off';
+                $('sound-label').textContent = on ? 'Suara Aktif' : 'Suara Mati';
+                soundToggle.setAttribute('aria-pressed', on ? 'true' : 'false');
+                soundToggle.classList.toggle('opacity-60', !on);
+            };
+            paintSound();
+
+            soundToggle.addEventListener('click', () => {
+                const next = !AudioEngine.isEnabled();
+                AudioEngine.setEnabled(next);
+                paintSound();
+
+                if (next) {
+                    AudioEngine.unlock();
+                    AudioEngine.success();
+                }
+            });
 
             $('fullscreen-btn').addEventListener('click', () => {
                 const kiosk = document.getElementById('kiosk');

@@ -30,17 +30,30 @@
 
         <details class="group relative">
             <summary class="flex cursor-pointer list-none items-center gap-2 rounded-2xl border border-white/70 bg-white/70 py-1.5 pl-1.5 pr-2 backdrop-blur transition hover:bg-white">
-                <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-500 text-[11px] font-bold text-white">
-                    {{ $user?->initials() }}
-                </span>
+                @include('partials.avatar', [
+                    'user' => $user,
+                    'class' => 'h-9 w-9 rounded-xl',
+                    'fallback' => 'bg-brand-500 text-white',
+                ])
                 <span class="material-symbols-outlined text-[18px] text-slate-400 transition group-open:rotate-180">expand_more</span>
             </summary>
             <div class="absolute right-0 mt-2 w-60 overflow-hidden rounded-2xl border border-white/70 bg-white/90 p-1.5 shadow-2xl shadow-slate-900/10 backdrop-blur-2xl">
-                <div class="px-3 py-2.5">
-                    <p class="text-[13px] font-bold text-ink">{{ $user?->name }}</p>
-                    <p class="truncate text-[11px] text-slate-400">{{ $user?->email }}</p>
+                <div class="flex items-center gap-2.5 px-3 py-2.5">
+                    @include('partials.avatar', [
+                        'user' => $user,
+                        'class' => 'h-10 w-10 rounded-xl',
+                        'fallback' => 'bg-brand-500 text-white',
+                    ])
+                    <div class="min-w-0">
+                        <p class="truncate text-[13px] font-bold text-ink">{{ $user?->name }}</p>
+                        <p class="truncate text-[11px] text-slate-400">{{ $user?->email }}</p>
+                    </div>
                 </div>
                 <div class="my-1 h-px bg-slate-100"></div>
+                <a href="{{ route('profile.edit') }}"
+                    class="flex min-h-11 items-center gap-2.5 rounded-xl px-3 text-[13px] font-medium text-slate-600 hover:bg-slate-50">
+                    <span class="material-symbols-outlined text-[19px]">account_circle</span> Foto profil
+                </a>
                 <a href="{{ $user?->isAdmin() ? route('dashboard') : route('wali.dashboard') }}"
                     class="flex min-h-11 items-center gap-2.5 rounded-xl px-3 text-[13px] font-medium text-slate-600 hover:bg-slate-50">
                     <span class="material-symbols-outlined text-[19px]">space_dashboard</span> Dasbor

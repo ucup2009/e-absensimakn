@@ -91,9 +91,11 @@
                             <tr class="transition hover:bg-slate-50/60">
                                 <td class="px-5 py-3">
                                     <div class="flex items-center gap-2.5">
-                                        <div class="flex h-9 w-9 items-center justify-center rounded-xl {{ $user->isAdmin() ? 'bg-brand-500 text-white' : 'bg-emerald-50 text-emerald-700' }} text-[11px] font-bold">
-                                            {{ $user->initials() }}
-                                        </div>
+                                        @include('partials.avatar', [
+                                            'user' => $user,
+                                            'class' => 'h-9 w-9 rounded-xl',
+                                            'fallback' => $user->isAdmin() ? 'bg-brand-500 text-white' : 'bg-emerald-50 text-emerald-700',
+                                        ])
                                         <div class="min-w-0">
                                             <p class="truncate text-[12.5px] font-semibold text-slate-700">{{ $user->name }}</p>
                                             <p class="truncate text-[10px] text-slate-400">{{ $user->email }}</p>
