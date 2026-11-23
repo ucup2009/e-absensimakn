@@ -1,7 +1,30 @@
 <?php
 
 use Illuminate\Support\Str;
-use Pdo\Mysql;
+
+/*
+|--------------------------------------------------------------------------
+| Opsi koneksi MySQL
+|--------------------------------------------------------------------------
+|
+| Wasmer Edge menyediakan MySQL terkelola yang memakai TLS dengan CA privat.
+| Konstanta Pdo\Mysql hanya ada di PHP 8.4+, sedangkan runtime Wasmer memakai
+| PHP 8.3, jadi pemilihan konstanta dibuat kompatibel untuk keduanya.
+|
+*/
+$mysqlOptions = [];
+
+if (extension_loaded('pdo_mysql')) {
+    $sslCa = env('MYSQL_ATTR_SSL_CA');
+
+    if (filled($sslCa)) {
+        $mysqlOptions[class_exists(\Pdo\Mysql::class) ? \Pdo\Mysql::ATTR_SSL_CA : PDO::MYSQL_ATTR_SSL_CA] = $sslCa;
+    }
+
+    if (filter_var(env('MYSQL_ATTR_SSL_VERIFY_SERVER_CERT', true), FILTER_VALIDATE_BOOL) === false) {
+        $mysqlOptions[class_exists(\Pdo\Mysql::class) ? \Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT : PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = false;
+    }
+}
 
 return [
 
@@ -49,7 +72,7 @@ return [
             'url' => env('DB_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'laravel'),
+            'database' => env('DB_DATABASE', env('DB_NAME', 'laravel')),
             'username' => env('DB_USERNAME', 'root'),
             'password' => env('DB_PASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),
@@ -59,9 +82,7 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
-            'options' => extension_loaded('pdo_mysql') ? array_filter([
-                Mysql::ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-            ]) : [],
+            'options' => $mysqlOptions,
         ],
 
         'mariadb' => [
@@ -69,7 +90,7 @@ return [
             'url' => env('DB_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'laravel'),
+            'database' => env('DB_DATABASE', env('DB_NAME', 'laravel')),
             'username' => env('DB_USERNAME', 'root'),
             'password' => env('DB_PASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),
@@ -79,9 +100,7 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
-            'options' => extension_loaded('pdo_mysql') ? array_filter([
-                Mysql::ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-            ]) : [],
+            'options' => $mysqlOptions,
         ],
 
         'pgsql' => [

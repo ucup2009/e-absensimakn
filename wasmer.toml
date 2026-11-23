@@ -1,0 +1,28 @@
+# Manifest paket Wasmer Edge untuk E-Absensi MAKN Ende.
+# Menjalankan Laravel 12 di atas runtime PHP 8.3 (WebAssembly).
+
+[dependencies]
+"php/php" = "=8.3.4"
+
+[fs]
+"/app/" = "."
+
+# Perintah utama: server PHP untuk folder public Laravel.
+[[command]]
+name = "run"
+module = "php/php:php"
+runner = "wasi"
+
+[command.annotations.wasi]
+main-args = ["-t", "/app/public", "-S", "localhost:8080"]
+env = ["PHPRC=/app/config"]
+
+# Perintah tambahan untuk kebutuhan artisan (migrasi & queue worker).
+[[command]]
+name = "artisan"
+module = "php/php:php"
+runner = "wasi"
+
+[command.annotations.wasi]
+main-args = ["/app/artisan"]
+env = ["PHPRC=/app/config"]

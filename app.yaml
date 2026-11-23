@@ -1,0 +1,65 @@
+kind: wasmer.io/App.v0
+name: e-absensi
+package: .
+
+# APP_KEY sengaja tidak ditulis di sini. Simpan sebagai secret:
+#   wasmer app secrets create APP_KEY "base64:...."
+env:
+  APP_NAME: "E-Absensi MAKN Ende"
+  APP_ENV: production
+  APP_DEBUG: "false"
+  APP_URL: "https://e-absensi.wasmer.app"
+  APP_LOCALE: id
+  APP_FALLBACK_LOCALE: en
+  APP_TIMEZONE: Asia/Makassar
+  LOG_CHANNEL: stderr
+  LOG_LEVEL: warning
+  SESSION_DRIVER: database
+  SESSION_SECURE_COOKIE: "true"
+  SESSION_LIFETIME: "120"
+  CACHE_STORE: database
+  QUEUE_CONNECTION: database
+  FILESYSTEM_DISK: local
+  DB_CONNECTION: mysql
+  MAIL_MAILER: log
+  BROADCAST_CONNECTION: log
+
+# PHP CLI server menangani satu permintaan sekaligus.
+scaling:
+  mode: single_concurrency
+
+capabilities:
+  # Wasmer membuatkan MySQL terkelola dan menyuntikkan DB_HOST, DB_PORT,
+  # DB_NAME, DB_USERNAME, DB_PASSWORD secara otomatis.
+  database:
+    engine: mysql
+
+# Database Wasmer hanya tersedia di region ini.
+locality:
+  regions:
+    - fr-roub1
+
+# Foto siswa/pengguna disimpan persisten di volume ini.
+volumes:
+  - name: uploads
+    mount: /app/public/storage
+
+jobs:
+  # Jalankan migrasi otomatis setiap deploy.
+  - name: migrate
+    trigger: pre-deployment
+    timeout: 5m
+    action:
+      execute:
+        command: artisan
+        cli_args: ["migrate", "--force"]
+
+  # Pengganti `php artisan queue:work` yang berjalan terus:
+  # setiap menit antrean WhatsApp diproses sampai habis.
+  - name: queue-worker
+    trigger: 1m
+    timeout: 55s
+    action:
+      execute:
+        command: artisan
+        cli_args: ["queue:work", "--stop-when-empty", "--max-time=45", "--tries=3", "--sleep=1"]
