@@ -25,9 +25,9 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 
 /**
- * Pembungkus WebView untuk E-Absensi MAKN Ende.
- * Alamat server bisa diganti langsung dari HP (disimpan di SharedPreferences),
- * sehingga pergantian domain/tunnel tidak perlu build ulang APK.
+ * Pembungkus WebView untuk E-Absensi MAKN Ende. Alamat server bisa diganti
+ * langsung dari HP (disimpan di SharedPreferences), sehingga pergantian
+ * domain/tunnel tidak perlu build ulang APK.
  */
 public class MainActivity extends Activity {
 
@@ -114,10 +114,15 @@ public class MainActivity extends Activity {
         webView.loadUrl(serverUrl);
     }
 
-    /** Rapikan alamat: tambah https:// bila belum ada skema, buang spasi & garis miring di akhir. */
+    /**
+     * Rapikan alamat: tambah https:// bila belum ada skema, buang spasi & garis
+     * miring di akhir.
+     */
     private static String normalize(String raw) {
         String url = raw == null ? "" : raw.trim();
-        if (url.isEmpty()) return "";
+        if (url.isEmpty()) {
+            return "";
+        }
         if (!url.matches("(?i)^https?://.*")) {
             url = (url.startsWith("localhost") || url.startsWith("127.0.0.1") || url.matches("^\\d+(\\.\\d+){3}.*"))
                     ? "http://" + url
@@ -146,7 +151,9 @@ public class MainActivity extends Activity {
         android.widget.Toast.makeText(this, message, android.widget.Toast.LENGTH_LONG).show();
     }
 
-    /** Dialog pengaturan alamat server. */
+    /**
+     * Dialog pengaturan alamat server.
+     */
     private void openServerSettings() {
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI);
@@ -203,8 +210,11 @@ public class MainActivity extends Activity {
         super.onDestroy();
     }
 
-    /** Jembatan untuk halaman offline dan halaman login. */
+    /**
+     * Jembatan untuk halaman offline dan halaman login.
+     */
     private class Bridge {
+
         @JavascriptInterface
         public void reload() {
             runOnUiThread(() -> {
