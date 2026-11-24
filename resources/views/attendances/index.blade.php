@@ -15,18 +15,18 @@
                 <span class="badge-green"><span class="material-symbols-outlined text-[13px]">fact_check</span> Rekapitulasi EMIS</span>
                 <p class="mt-1 text-sm text-slate-500">Cari, filter, dan unduh data kehadiran siswa.</p>
             </div>
-            <div class="flex flex-wrap items-center gap-2">
-                <button type="button" data-modal-open="manualAttendance" class="btn-secondary">
+            <div class="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:items-center">
+                <button type="button" data-modal-open="manualAttendance" class="btn-secondary whitespace-nowrap px-2 text-[12px] sm:px-5 sm:text-[14px]">
                     <span class="material-symbols-outlined text-[18px]">edit_calendar</span>
-                    Input Manual
+                    <span class="hidden sm:inline">Input&nbsp;</span>Manual
                 </button>
-                <a href="{{ route('attendances.excel', $filters) }}" class="btn-secondary">
+                <a href="{{ route('attendances.excel', $filters) }}" class="btn-secondary whitespace-nowrap px-2 text-[12px] sm:px-5 sm:text-[14px]">
                     <span class="material-symbols-outlined text-[18px] text-emerald-600">table_view</span>
-                    Export Excel
+                    <span class="hidden sm:inline">Ekspor&nbsp;</span>Excel
                 </a>
-                <a href="{{ route('attendances.pdf', $filters) }}" class="btn-primary">
+                <a href="{{ route('attendances.pdf', $filters) }}" class="btn-primary px-2 text-[12px] sm:px-5 sm:text-[14px]">
                     <span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
-                    Export PDF
+                    PDF
                 </a>
             </div>
         </div>
@@ -95,30 +95,30 @@
         </form>
 
         {{-- Summary --}}
-        <div class="grid grid-cols-2 gap-3 lg:grid-cols-5">
-            <div class="card p-4">
+        <div class="grid grid-cols-2 gap-2.5 lg:grid-cols-5">
+            <div class="card p-3.5 lg:p-4">
                 <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total Rekaman</p>
                 <p class="mt-1 text-xl font-extrabold text-ink">{{ number_format($summary['total'], 0, ',', '.') }}</p>
                 <p class="text-[10px] text-slate-400">{{ $filters['from'] }} s/d {{ $filters['to'] }}</p>
             </div>
-            <div class="card p-4">
+            <div class="card p-3.5 lg:p-4">
                 <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Tingkat Kehadiran</p>
                 <p class="mt-1 text-xl font-extrabold text-emerald-600">{{ $summary['rate'] }}%</p>
                 <div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-slate-100">
                     <div class="h-full rounded-full bg-emerald-500" style="width: {{ $summary['rate'] }}%"></div>
                 </div>
             </div>
-            <div class="card p-4">
+            <div class="card p-3.5 lg:p-4">
                 <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Hadir</p>
                 <p class="mt-1 text-xl font-extrabold text-slate-700">{{ number_format($summary['hadir'], 0, ',', '.') }}</p>
                 <p class="text-[10px] text-emerald-600">tepat waktu</p>
             </div>
-            <div class="card p-4">
+            <div class="card p-3.5 lg:p-4">
                 <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Terlambat</p>
                 <p class="mt-1 text-xl font-extrabold text-amber-600">{{ number_format($summary['terlambat'], 0, ',', '.') }}</p>
                 <p class="text-[10px] text-amber-500">perlu tindak lanjut</p>
             </div>
-            <div class="card p-4">
+            <div class="card col-span-2 p-3.5 lg:col-span-1 lg:p-4">
                 <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Izin / Sakit / Alpa</p>
                 <p class="mt-1 text-xl font-extrabold text-slate-700">{{ $summary['izin'] }} / {{ $summary['sakit'] }} / {{ $summary['alpa'] }}</p>
                 <p class="text-[10px] text-slate-400">{{ $summary['notifications'] }} notifikasi terkirim</p>

@@ -15,19 +15,19 @@
 @section('content')
     <div class="mx-auto max-w-[1400px] space-y-5">
         <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-            <div class="flex items-center gap-3">
+            <div class="flex items-start gap-3">
                 @include('partials.avatar', [
                     'user' => $class?->homeroomTeacher ?? auth()->user(),
-                    'class' => 'h-12 w-12 rounded-2xl',
+                    'class' => 'mt-0.5 h-11 w-11 rounded-xl lg:h-12 lg:w-12 lg:rounded-2xl',
                     'fallback' => 'bg-emerald-100 text-emerald-700',
                     'text' => 'text-[15px]',
                 ])
-                <div>
-                    <div class="flex flex-wrap items-center gap-2">
+                <div class="min-w-0">
+                    <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
                         <span class="badge-green"><span class="material-symbols-outlined text-[13px]">co_present</span> Wali Kelas</span>
                         <span class="badge-slate"><span class="material-symbols-outlined text-[13px]">calendar_month</span> {{ $date?->locale('id')->translatedFormat('l, d F Y') }}</span>
                     </div>
-                    <p class="mt-1 text-sm text-slate-500">
+                    <p class="mt-1.5 text-[12.5px] leading-relaxed text-slate-500 sm:text-sm">
                         {{ $class ? 'Wali kelas: '.($class->homeroomTeacher?->name ?? auth()->user()->name).' • '.$totalStudents.' siswa aktif' : 'Anda belum ditetapkan sebagai wali kelas.' }}
                     </p>
                 </div>
@@ -50,9 +50,9 @@
         </div>
 
         @if (! $class)
-            <div class="card flex flex-col items-center justify-center px-6 py-16 text-center">
-                <div class="flex h-20 w-20 items-center justify-center rounded-3xl bg-amber-50 text-amber-500">
-                    <span class="material-symbols-outlined text-[38px]">meeting_room</span>
+            <div class="card flex flex-col items-center justify-center px-6 py-10 text-center sm:py-16">
+                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-50 text-amber-500 sm:h-20 sm:w-20 sm:rounded-3xl">
+                    <span class="material-symbols-outlined text-[32px] sm:text-[38px]">meeting_room</span>
                 </div>
                 <h3 class="mt-4 text-[16px] font-bold text-ink">Belum ada kelas binaan</h3>
                 <p class="mt-1.5 max-w-md text-[12px] leading-relaxed text-slate-500">

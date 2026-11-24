@@ -20,8 +20,8 @@
     @stack('head')
 </head>
 <body class="min-h-full">
-    {{-- Latar dekoratif untuk efek kaca --}}
-    <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+    {{-- Latar dekoratif untuk efek kaca (hanya desktop) --}}
+    <div class="pointer-events-none fixed inset-0 -z-10 hidden overflow-hidden lg:block">
         <div class="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-emerald-300/30 blur-3xl"></div>
         <div class="absolute -right-24 top-1/4 h-80 w-80 rounded-full bg-sky-300/25 blur-3xl"></div>
         <div class="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-teal-200/30 blur-3xl"></div>
@@ -32,7 +32,7 @@
     <div class="lg:pl-[272px]">
         @include('partials.topbar')
 
-        <main class="mx-auto w-full max-w-[1400px] px-3.5 pb-28 pt-4 sm:px-6 sm:pt-5 lg:px-8 lg:pb-10">
+        <main class="mx-auto w-full max-w-[1400px] px-4 pb-24 pt-3.5 sm:px-6 sm:pt-5 lg:px-8 lg:pb-10">
             @yield('content')
         </main>
 

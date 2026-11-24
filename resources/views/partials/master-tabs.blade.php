@@ -1,5 +1,5 @@
 @php($active = $active ?? 'students')
-<div class="flex flex-wrap items-center gap-1.5 rounded-xl border border-slate-200 bg-white p-1.5">
+<div class="scrollbar-hide flex flex-nowrap items-center gap-1.5 overflow-x-auto rounded-xl border border-slate-200 bg-white p-1.5">
     <a href="{{ route('students.index') }}" class="tab-link {{ $active === 'students' ? 'tab-link-active' : '' }}">
         <span class="material-symbols-outlined text-[17px]">groups</span> Data Siswa
         <span class="rounded-md px-1.5 py-0.5 text-[10px] {{ $active === 'students' ? 'bg-white/20' : 'bg-slate-100 text-slate-500' }}">{{ \App\Models\Student::count() }}</span>

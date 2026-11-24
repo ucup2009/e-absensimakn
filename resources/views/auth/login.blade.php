@@ -71,8 +71,8 @@
                 <div class="w-full max-w-[520px]">
 
                     {{-- Brand ringkas (mobile) --}}
-                    <div class="mb-7 flex items-center gap-3 lg:hidden">
-                        <img src="{{ $logoSrc }}" alt="Logo MAKN Ende" class="h-12 w-12 object-contain">
+                    <div class="mb-6 flex items-center gap-3 lg:hidden">
+                        <img src="{{ $logoSrc }}" alt="Logo MAKN Ende" class="h-10 w-10 object-contain">
                         <div>
                             <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">Kementerian Agama RI</p>
                             <p class="text-sm font-extrabold tracking-wide text-brand-500">MAKN ENDE <span class="font-normal text-slate-400">• FLORES</span></p>
@@ -81,15 +81,15 @@
 
                     <div class="flex items-start justify-between gap-4">
                         <div>
-                            <h1 class="text-[28px] font-extrabold tracking-tight text-ink sm:text-[30px]">Masuk/Login</h1>
-                            <p class="mt-1.5 text-[13px] text-slate-500">Silakan masukkan kredensial akun terdaftar Anda.</p>
+                            <h1 class="text-[24px] font-extrabold tracking-tight text-ink sm:text-[30px]">Masuk/Login</h1>
+                            <p class="mt-1 text-[12.5px] text-slate-500 sm:mt-1.5 sm:text-[13px]">Silakan masukkan kredensial akun terdaftar Anda.</p>
                         </div>
-                        <span class="mt-1 grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#EDEAFB] text-[#5B4BB7]">
+                        <span class="mt-1 hidden h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#EDEAFB] text-[#5B4BB7] sm:grid">
                             <span class="material-symbols-outlined text-[22px]">verified_user</span>
                         </span>
                     </div>
 
-                    <div class="mt-6 grid grid-cols-2 gap-1 rounded-xl bg-[#F1EFFB] p-1.5" data-role-tabs>
+                    <div class="mt-5 grid grid-cols-2 gap-1 rounded-xl bg-[#F1EFFB] p-1.5 sm:mt-6" data-role-tabs>
                         <button type="button" data-role="admin" data-demo-email="admin@maknende.sch.id"
                             class="flex items-center justify-center gap-2 rounded-lg bg-white px-3 py-2.5 text-[12.5px] font-bold text-brand-500 shadow-sm ring-1 ring-slate-200/60 transition">
                             <span class="material-symbols-outlined text-[17px]">admin_panel_settings</span> Admin / Operator
@@ -146,6 +146,7 @@
                         <span>Alamat server: <span id="app-server-url" class="font-normal"></span></span>
                     </button>
 
+                    @if (app()->environment('local'))
                     <div class="mt-5 rounded-xl bg-[#F1EFFB] p-4">
                         <p class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[#6C63A8]">
                             <span class="material-symbols-outlined text-[15px]">bolt</span> Akses Cepat Pengujian (Staging Demo)
@@ -167,15 +168,16 @@
                             </button>
                         </div>
                     </div>
+                    @endif
 
-                    <div class="mt-5 flex flex-wrap items-center justify-between gap-3 text-[10.5px] font-medium text-slate-500">
+                    <div class="mt-5 flex flex-wrap items-center justify-between gap-2 text-[10.5px] font-medium text-slate-500">
                         <span class="flex items-center gap-1.5">
-                            <span class="material-symbols-outlined text-[15px] text-brand-500">encrypted</span>
-                            Argon2id Encrypted <span class="text-slate-300">•</span> Laravel 13
+                            <span class="material-symbols-outlined text-[14px] text-brand-500">lock</span>
+                            Koneksi terenkripsi
                         </span>
                         <span class="flex items-center gap-1.5">
-                            <span class="material-symbols-outlined text-[15px] text-brand-500">verified_user</span>
-                            reCAPTCHA Enterprise Kemenag
+                            <span class="material-symbols-outlined text-[14px] text-brand-500">groups</span>
+                            Khusus pegawai madrasah
                         </span>
                     </div>
 
@@ -183,10 +185,9 @@
                         <span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white/80 text-[#5B4BB7]">
                             <span class="material-symbols-outlined text-[18px]">headset_mic</span>
                         </span>
-                        <p class="flex-1 text-[10.5px] leading-snug text-[#6C63A8]">Kendala akun presensi atau lupa PIN?</p>
+                        <p class="flex-1 text-[10.5px] leading-snug text-[#6C63A8]">Kendala akun presensi?</p>
                         <a href="tel:+6282129987764" class="flex items-center gap-1.5 text-[10.5px] font-bold leading-tight text-slate-700 transition hover:text-brand-600">
-                            Hubungi Admin IT<br><span class="font-semibold text-slate-500">(+62 821-2998-7764)</span>
-                            <span class="material-symbols-outlined text-[15px] text-slate-400">open_in_new</span>
+                            Admin IT<br><span class="font-semibold text-slate-500">(+62 821-2998-7764)</span>
                         </a>
                     </div>
                 </div>

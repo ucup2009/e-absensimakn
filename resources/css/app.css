@@ -41,6 +41,14 @@
         background-attachment: fixed;
     }
 
+    /* HP: latar datar supaya bersih dan hemat baterai. */
+    @media (max-width: 1023px) {
+        body {
+            background-color: #f6f7f7;
+            background-image: none;
+        }
+    }
+
     ::selection {
         @apply bg-brand-500/20 text-brand-900;
     }
@@ -175,11 +183,76 @@
     }
 
     .tab-link {
-        @apply inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-sm font-semibold text-slate-500 transition hover:bg-slate-100 hover:text-slate-700;
+        @apply inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-xl px-3.5 py-2 text-sm font-semibold text-slate-500 transition hover:bg-slate-100 hover:text-slate-700;
     }
 
     .tab-link-active {
         @apply bg-brand-500 text-white shadow-sm hover:bg-brand-500 hover:text-white;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Tampilan HP — Minimalis & bersih
+    |--------------------------------------------------------------------------
+    |
+    | Di layar kecil efek kaca (blur), sudut sangat bulat, dan bayangan tebal
+    | membuat antarmuka terasa berat. Di sini semuanya diratakan: permukaan
+    | putih solid, garis tepi tipis, radius lebih kecil, tanpa bayangan.
+    | Tampilan desktop tetap memakai glassmorphism.
+    |
+    */
+    @media (max-width: 1023px) {
+        .card,
+        .card-pad,
+        .glass,
+        .glass-soft {
+            border-radius: 1rem;
+            border-color: #e7ece9;
+            background-color: #ffffff;
+            box-shadow: none;
+            -webkit-backdrop-filter: none;
+            backdrop-filter: none;
+        }
+
+        .card-pad {
+            padding: 1rem;
+        }
+
+        .btn,
+        .btn-primary,
+        .btn-secondary,
+        .btn-soft,
+        .btn-danger {
+            border-radius: 0.875rem;
+            box-shadow: none;
+        }
+
+        .btn-primary {
+            box-shadow: 0 8px 18px -14px rgba(13, 92, 58, 0.9);
+        }
+
+        .input,
+        .select,
+        .textarea {
+            min-height: 48px;
+            border-radius: 0.875rem;
+            border-color: #e7ece9;
+            background-color: #ffffff;
+            box-shadow: none;
+        }
+
+        .nav-link,
+        .tab-link {
+            border-radius: 0.875rem;
+        }
+
+        .table-head {
+            background-color: #f8faf9;
+        }
+
+        .table-cell {
+            padding: 0.75rem;
+        }
     }
 }
 

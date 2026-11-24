@@ -1,9 +1,9 @@
 @php($user = auth()->user())
 
-<header class="sticky top-0 z-30 border-b border-white/50 bg-white/60 pt-[env(safe-area-inset-top)] backdrop-blur-2xl">
-    <div class="mx-auto flex h-[60px] max-w-[1400px] items-center gap-2 px-3.5 sm:px-6 lg:h-[68px] lg:px-8">
+<header class="sticky top-0 z-30 border-b border-slate-200/80 bg-white pt-[env(safe-area-inset-top)] lg:border-white/50 lg:bg-white/60 lg:backdrop-blur-2xl">
+    <div class="mx-auto flex h-14 max-w-[1400px] items-center gap-2 px-4 sm:px-6 lg:h-[68px] lg:px-8">
         <button type="button" data-sidebar-toggle aria-label="Buka menu"
-            class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border border-white/70 bg-white/70 text-slate-600 backdrop-blur transition hover:bg-white lg:hidden">
+            class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-slate-200 bg-slate-50 text-slate-600 transition active:scale-95 lg:hidden">
             <span class="material-symbols-outlined text-[22px]">menu</span>
         </button>
 
@@ -23,21 +23,21 @@
         </div>
 
         <button type="button" data-install-app
-            class="hidden min-h-[42px] items-center gap-1.5 rounded-2xl bg-brand-500 px-3.5 text-[12px] font-bold text-white shadow-sm transition hover:bg-brand-600">
-            <span class="material-symbols-outlined text-[18px]">install_mobile</span>
+            class="hidden h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-brand-600 transition active:scale-95 sm:h-auto sm:min-h-[42px] sm:w-auto sm:gap-1.5 sm:rounded-2xl sm:border-0 sm:bg-brand-500 sm:px-3.5 sm:text-[12px] sm:font-bold sm:text-white sm:hover:bg-brand-600">
+            <span class="material-symbols-outlined text-[20px] sm:text-[18px]">install_mobile</span>
             <span class="hidden sm:inline">Pasang aplikasi</span>
         </button>
 
         <details class="group relative">
-            <summary class="flex cursor-pointer list-none items-center gap-2 rounded-2xl border border-white/70 bg-white/70 py-1.5 pl-1.5 pr-2 backdrop-blur transition hover:bg-white">
+            <summary class="flex cursor-pointer list-none items-center gap-1.5 rounded-xl border border-slate-200 bg-white py-1 pl-1 pr-1.5 transition active:scale-95 lg:rounded-2xl lg:border-white/70 lg:bg-white/70 lg:py-1.5 lg:pl-1.5 lg:pr-2 lg:backdrop-blur">
                 @include('partials.avatar', [
                     'user' => $user,
-                    'class' => 'h-9 w-9 rounded-xl',
+                    'class' => 'h-8 w-8 rounded-lg lg:h-9 lg:w-9 lg:rounded-xl',
                     'fallback' => 'bg-brand-500 text-white',
                 ])
                 <span class="material-symbols-outlined text-[18px] text-slate-400 transition group-open:rotate-180">expand_more</span>
             </summary>
-            <div class="absolute right-0 mt-2 w-60 overflow-hidden rounded-2xl border border-white/70 bg-white/90 p-1.5 shadow-2xl shadow-slate-900/10 backdrop-blur-2xl">
+            <div class="absolute right-0 mt-2 w-60 overflow-hidden rounded-2xl border border-slate-200 bg-white p-1.5 shadow-xl shadow-slate-900/10 lg:border-white/70 lg:bg-white/90 lg:backdrop-blur-2xl">
                 <div class="flex items-center gap-2.5 px-3 py-2.5">
                     @include('partials.avatar', [
                         'user' => $user,

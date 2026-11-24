@@ -14,16 +14,16 @@
                 <span class="badge-green"><span class="material-symbols-outlined text-[13px]">database</span> Master Data</span>
                 <p class="mt-1 text-sm text-slate-500">Kelola data siswa, kelas, kartu QR, dan wali kelas.</p>
             </div>
-            <div class="flex flex-wrap items-center gap-2">
-                <button type="button" data-modal-open="importModal" class="btn-secondary">
+            <div class="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center">
+                <button type="button" data-modal-open="importModal" class="btn-secondary px-2 text-[12px] sm:px-5 sm:text-[14px]">
                     <span class="material-symbols-outlined text-[18px] text-emerald-600">upload_file</span>
                     Import EMIS
                 </button>
-                <a href="{{ route('students.cards', $filters['class_id'] ? ['class_id' => $filters['class_id']] : []) }}" class="btn-secondary">
+                <a href="{{ route('students.cards', $filters['class_id'] ? ['class_id' => $filters['class_id']] : []) }}" class="btn-secondary px-2 text-[12px] sm:px-5 sm:text-[14px]">
                     <span class="material-symbols-outlined text-[18px]">print</span>
                     Cetak Kartu
                 </a>
-                <a href="{{ route('students.create') }}" class="btn-primary">
+                <a href="{{ route('students.create') }}" class="btn-primary col-span-2 px-2 text-[12px] sm:col-auto sm:px-5 sm:text-[14px]">
                     <span class="material-symbols-outlined text-[18px]">person_add</span>
                     Tambah Siswa
                 </a>

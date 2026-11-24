@@ -13,29 +13,29 @@
             <div>
                 <div class="flex flex-wrap items-center gap-2">
                     <span class="badge-green"><span class="pulse-dot h-1.5 w-1.5 rounded-full bg-emerald-500"></span> Kamera siap</span>
-                    <span class="badge-slate"><span class="material-symbols-outlined text-[13px]">router</span> Gerbang Putra • Kiosk 01</span>
+                    <span class="badge-slate hidden sm:inline-flex"><span class="material-symbols-outlined text-[13px]">router</span> Gerbang Putra • Kiosk 01</span>
                     <span class="badge-sky"><span class="material-symbols-outlined text-[13px]">schedule</span> {{ $checkInStart }} – {{ $ontimeLimit }} WITA</span>
                 </div>
-                <p class="mt-1 text-sm text-slate-500">Pindai kartu siswa untuk mencatat absen masuk atau pulang.</p>
+                <p class="mt-1 text-[12.5px] text-slate-500 sm:text-sm">Pindai kartu siswa untuk mencatat absen masuk atau pulang.</p>
             </div>
 
-            <div class="flex flex-wrap items-center gap-2">
-                <div class="inline-flex rounded-xl border border-slate-200 bg-white p-1" id="mode-switch">
-                    <button type="button" data-mode="in" class="rounded-lg px-3.5 py-2 text-[12px] font-bold transition {{ $initialMode === 'in' ? 'bg-brand-500 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50' }}">
+            <div class="flex items-center gap-2">
+                <div class="inline-flex flex-1 rounded-xl border border-slate-200 bg-white p-1 sm:flex-initial" id="mode-switch">
+                    <button type="button" data-mode="in" class="flex-1 whitespace-nowrap rounded-lg px-2.5 py-2 text-[12px] font-bold transition sm:flex-none sm:px-3.5 {{ $initialMode === 'in' ? 'bg-brand-500 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50' }}">
                         <span class="material-symbols-outlined align-middle text-[16px]">login</span> Masuk Pagi
                     </button>
-                    <button type="button" data-mode="out" class="rounded-lg px-3.5 py-2 text-[12px] font-bold transition {{ $initialMode === 'out' ? 'bg-sky-600 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50' }}">
+                    <button type="button" data-mode="out" class="flex-1 whitespace-nowrap rounded-lg px-2.5 py-2 text-[12px] font-bold transition sm:flex-none sm:px-3.5 {{ $initialMode === 'out' ? 'bg-sky-600 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50' }}">
                         <span class="material-symbols-outlined align-middle text-[16px]">logout</span> Pulang Sore
                     </button>
                 </div>
                 <button type="button" id="sound-toggle" aria-pressed="true" title="Bunyi saat presensi berhasil"
-                    class="btn-secondary">
+                    class="btn-secondary shrink-0 px-3 sm:px-5">
                     <span class="material-symbols-outlined text-[19px]" id="sound-icon">volume_up</span>
                     <span id="sound-label" class="hidden sm:inline">Suara Aktif</span>
                 </button>
-                <button type="button" id="fullscreen-btn" class="btn-secondary">
+                <button type="button" id="fullscreen-btn" title="Layar penuh" class="btn-secondary shrink-0 px-3 sm:px-5">
                     <span class="material-symbols-outlined text-[19px]">fullscreen</span>
-                    Layar Penuh
+                    <span class="hidden sm:inline">Layar Penuh</span>
                 </button>
             </div>
         </div>
@@ -62,9 +62,6 @@
                         <div class="absolute left-4 top-4 flex items-center gap-2 rounded-lg bg-black/50 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-white/80 backdrop-blur">
                             <span class="pulse-dot h-1.5 w-1.5 rounded-full bg-rose-400"></span> Live • Kamera 01
                         </div>
-                        <div class="absolute right-4 top-4 rounded-lg bg-black/50 px-2.5 py-1.5 text-[10px] font-semibold text-white/70 backdrop-blur">
-                            <span class="material-symbols-outlined align-middle text-[13px]">photo_camera</span> CMOS 1080p
-                        </div>
 
                         <div class="absolute bottom-4 left-1/2 w-[88%] -translate-x-1/2 rounded-xl bg-black/55 px-4 py-2.5 text-center backdrop-blur">
                             <p class="text-[12px] font-semibold text-white" id="scanner-hint">Arahkan kartu pelajar ke area bidik QR Code</p>
@@ -82,11 +79,11 @@
                     </div>
 
                     <div class="flex flex-col gap-3 border-t border-slate-100 p-4 sm:flex-row sm:items-center sm:justify-between">
-                        <div class="flex items-center gap-2 text-[11px] text-slate-500">
+                        <div class="hidden items-center gap-2 text-[11px] text-slate-500 sm:flex">
                             <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-50 text-brand-600"><span class="material-symbols-outlined text-[16px]">bolt</span></span>
                             Pemindaian tercatat &lt; 1 detik • notifikasi WA asynchronous
                         </div>
-                        <button type="button" data-modal-open="manualModal" class="btn-soft py-2 text-[12px]">
+                        <button type="button" data-modal-open="manualModal" class="btn-soft w-full py-2 text-[12px] sm:w-auto">
                             <span class="material-symbols-outlined text-[17px]">keyboard</span>
                             Input NISN Manual
                         </button>

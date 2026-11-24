@@ -1,14 +1,15 @@
 kind: wasmer.io/App.v0
 name: e-absensi
 package: .
+owner: ucup2009
 
 # APP_KEY sengaja tidak ditulis di sini. Simpan sebagai secret:
-#   wasmer app secrets create APP_KEY "base64:...."
+#   wasmer app secret create APP_KEY "base64:...."
 env:
   APP_NAME: "E-Absensi MAKN Ende"
   APP_ENV: production
   APP_DEBUG: "false"
-  APP_URL: "https://e-absensi.wasmer.app"
+  APP_URL: "https://e-absensi-ucup2009.wasmer.app"
   APP_LOCALE: id
   APP_FALLBACK_LOCALE: en
   APP_TIMEZONE: Asia/Makassar
@@ -53,6 +54,15 @@ jobs:
       execute:
         command: artisan
         cli_args: ["migrate", "--force"]
+
+  # Isi data awal HANYA saat database masih kosong (sekali seumur aplikasi).
+  - name: prepare
+    trigger: post-deployment
+    timeout: 5m
+    action:
+      execute:
+        command: artisan
+        cli_args: ["deploy:prepare"]
 
   # Pengganti `php artisan queue:work` yang berjalan terus:
   # setiap menit antrean WhatsApp diproses sampai habis.
