@@ -23,6 +23,9 @@
 /storage/app/android/
 /storage/app/lan-tls/
 /public/download/*.apk
+/firebase/node_modules
+/firebase/service-account.json
+/firebase/service-account*.json
 /vendor
 _ide_helper.php
 Homestead.json

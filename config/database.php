@@ -7,9 +7,9 @@ use Illuminate\Support\Str;
 | Opsi koneksi MySQL
 |--------------------------------------------------------------------------
 |
-| Wasmer Edge menyediakan MySQL terkelola yang memakai TLS dengan CA privat.
-| Konstanta Pdo\Mysql hanya ada di PHP 8.4+, sedangkan runtime Wasmer memakai
-| PHP 8.3, jadi pemilihan konstanta dibuat kompatibel untuk keduanya.
+| Konstanta Pdo\Mysql baru ada di PHP 8.4+, sedangkan sebagian server masih
+| memakai PHP 8.3, jadi pemilihan konstanta dibuat kompatibel untuk keduanya.
+| Opsi SSL hanya dipasang kalau memang diatur lewat environment.
 |
 */
 $mysqlOptions = [];

@@ -1,0 +1,30 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "attendances",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "date", "order": "DESCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "attendances",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "student_id", "order": "ASCENDING" },
+        { "fieldPath": "date", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "students",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "class_id", "order": "ASCENDING" },
+        { "fieldPath": "is_active", "order": "ASCENDING" },
+        { "fieldPath": "name", "order": "ASCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

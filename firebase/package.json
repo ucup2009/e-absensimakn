@@ -1,0 +1,12 @@
+{
+  "name": "e-absensi-firestore-seed",
+  "private": true,
+  "type": "module",
+  "description": "Mengisi Firestore dengan data hasil `php artisan export:dataset`.",
+  "scripts": {
+    "seed": "node seed.mjs"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.0.0"
+  }
+}

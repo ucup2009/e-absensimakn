@@ -40,8 +40,8 @@ return [
 
         'public' => [
             'driver' => 'local',
-            // Di lokal menunjuk ke symlink public/storage; di Wasmer Edge
-            // menunjuk ke volume persisten yang di-mount di /app/public/storage.
+            // Root disk publik. Bisa diarahkan lewat PUBLIC_DISK_ROOT kalau
+            // hosting tidak memakai symlink storage:link.
             'root' => env('PUBLIC_DISK_ROOT', public_path('storage')),
             'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
             'visibility' => 'public',
