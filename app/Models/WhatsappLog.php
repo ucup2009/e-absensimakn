@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable([
-    'student_id', 'attendance_id', 'phone', 'message', 'type',
-    'status', 'response', 'sent_at',
-])]
 class WhatsappLog extends Model
 {
+    /** @var list<string> */
+    protected $fillable = [
+        'student_id', 'attendance_id', 'phone', 'message', 'type',
+        'status', 'response', 'sent_at',
+    ];
+
     protected $table = 'whatsapp_logs';
 
     protected function casts(): array

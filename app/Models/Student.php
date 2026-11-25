@@ -2,19 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable([
-    'nisn', 'name', 'class_id', 'gender', 'parent_name', 'parent_phone',
-    'address', 'birth_date', 'photo', 'qr_code', 'qr_generated_at', 'is_active',
-])]
 class Student extends Model
 {
     use HasFactory;
+
+    /** @var list<string> */
+    protected $fillable = [
+        'nisn', 'name', 'class_id', 'gender', 'parent_name', 'parent_phone',
+        'address', 'birth_date', 'photo', 'qr_code', 'qr_generated_at', 'is_active',
+    ];
+
 
     protected function casts(): array
     {

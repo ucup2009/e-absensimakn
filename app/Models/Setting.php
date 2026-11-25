@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 
-#[Fillable(['key', 'value', 'group'])]
 class Setting extends Model
 {
+    /** @var list<string> */
+    protected $fillable = ['key', 'value', 'group'];
+
     public static function get(string $key, mixed $default = null): mixed
     {
         $settings = Cache::rememberForever('app.settings', function () {

@@ -160,10 +160,15 @@ class SettingController extends Controller
 
             fwrite($handle, "DROP TABLE IF EXISTS `{$table}`;\n".$create[1].";\n\n");
 
-            foreach ($pdo->query("SELECT * FROM `{$table}`") as $row) {
+            // FETCH_NUM penting: mode default (BOTH) membuat setiap nilai muncul
+            // dua kali dan menghasilkan INSERT dengan jumlah nilai berlebih.
+            $statement = $pdo->query("SELECT * FROM `{$table}`");
+            $statement->setFetchMode(PDO::FETCH_NUM);
+
+            foreach ($statement as $row) {
                 $values = array_map(
                     fn ($value) => $value === null ? 'NULL' : $pdo->quote((string) $value),
-                    array_values($row)
+                    $row
                 );
 
                 fwrite($handle, "INSERT INTO `{$table}` VALUES (".implode(',', $values).");\n");

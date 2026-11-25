@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable([
-    'student_id', 'date', 'time_in', 'time_out', 'status',
-    'notification_status', 'notification_sent_at', 'note', 'recorded_by',
-])]
 class Attendance extends Model
 {
+    /** @var list<string> */
+    protected $fillable = [
+        'student_id', 'date', 'time_in', 'time_out', 'status',
+        'notification_status', 'notification_sent_at', 'note', 'recorded_by',
+    ];
+
     public const STATUS_HADIR = 'hadir';
 
     public const STATUS_TERLAMBAT = 'terlambat';

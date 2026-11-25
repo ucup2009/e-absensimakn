@@ -3,19 +3,23 @@
 namespace App\Models;
 
 use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password', 'role', 'phone', 'nip', 'photo', 'is_active', 'last_login_at'])]
-#[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
+
+    /** @var list<string> */
+    protected $fillable = [
+        'name', 'email', 'password', 'role', 'phone', 'nip', 'photo', 'is_active', 'last_login_at',
+    ];
+
+    /** @var list<string> */
+    protected $hidden = ['password', 'remember_token'];
 
     public const ROLE_ADMIN = 'admin';
 
